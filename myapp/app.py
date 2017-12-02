@@ -10,25 +10,25 @@ app = Flask(__name__)
 @app.route("/")
 def index():
         return """
-        Available API endpoints:
+        Available API endpoints:\n
 
-        GET /containers                     List all containers
-        GET /containers?state=running      List running containers (only)
-        GET /containers/<id>                Inspect a specific container
-        GET /containers/<id>/logs           Dump specific container logs
-        GET /images                         List all images
+        GET /containers                     List all containers\n
+        GET /containers?state=running      List running containers (only)\n
+        GET /containers/<id>                Inspect a specific container\n
+        GET /containers/<id>/logs           Dump specific container logs\n
+        GET /images                         List all images\n\n
 
 
-        POST /images                        Create a new image
-        POST /containers                    Create a new container
+        POST /images                        Create a new image\n
+        POST /containers                    Create a new container\n\n
 
-        PATCH /containers/<id>              Change a container's state
-        PATCH /images/<id>                  Change a specific image's attributes
+        PATCH /containers/<id>              Change a container's state\n
+        PATCH /images/<id>                  Change a specific image's attributes\n
 
-        DELETE /containers/<id>             Delete a specific container
-        DELETE /containers                  Delete all containers (including running)
-        DELETE /images/<id>                 Delete a specific image
-        DELETE /images                      Delete all images
+        DELETE /containers/<id>             Delete a specific container\n
+        DELETE /containers                  Delete all containers (including running)\n
+        DELETE /images/<id>                 Delete a specific image\n
+        DELETE /images                      Delete all images\n\n
 
         """
 
@@ -92,12 +92,6 @@ def create_container():
 
 @app.route('/images', methods=['POST'])
 def images_create():
-    """
-    Create image (from uploaded Dockerfile)
-
-    curl -H 'Accept: application/json' -F file=@Dockerfile http://localhost:8080/images
-
-    """
     request_file = request.files['file']
     request_file.save('DockerfileUpload')
 
