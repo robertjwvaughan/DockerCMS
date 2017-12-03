@@ -104,3 +104,6 @@ docker image rm IMAGE
 docker service create --replicas 3 -p 80:80 --name webservice nginx
 ```
 The above command create an NGINX service with the use of the webport (80). This nginx image allows one to deploy the web server service within containers. When the service is lauched, if one goes to the IP of one of the nodes, they will see the default NGINX page
+
+## Q4
+For this question, one was required to run a local test script on their machine to test each endpoint. This test script is examined in the You Tube video and is hosted on this repo
