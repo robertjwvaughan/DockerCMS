@@ -85,9 +85,9 @@ def create_container():
     
     json_request = request.get_json(force=True)
     image = json_request['image']
-    
-    output = docker('run', '-d', image)[0:12]
-    resp = '{"id": "' + output + '"}'
+    args = ('run', '-d')
+    id = docker(*(args + (image,)))[0:12]
+    resp = '{"id": "' + id + '"}'
 
     return Response(response=resp, mimetype="application/json")
 
@@ -132,7 +132,7 @@ def images_remove_all():
     
     for obj in json_data:
         if obj['name'] != 'cms':
-            docker('rmi', obj['name'])
+            docker('rmi', obj['id'])
 
     resp = '{"status": "completed"}'
     return Response(response=resp, mimetype="application/json")
@@ -151,7 +151,7 @@ def containers_remove_all():
     json_data = docker_ps_to_array(output)
 
     for obj in json_data:
-        if obj['image'] != 'cms':
+        if obj['image'] != 'cms' and obj['image'] != "cms:latest":
             docker('stop', str(obj['id']))
             docker('rm', str(obj['id']))
 
