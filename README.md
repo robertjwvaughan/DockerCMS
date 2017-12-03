@@ -30,7 +30,9 @@ A key note is the following flag
 
 The above flag essentially allows the docker socket to be avaiable to the service, which will allow us to run the queries we require
 
-Once your service is up, you can run the test.py file. This will ask for the IP to which your endpoints are running on so make sure you have an accessiable IP to the machine you are running the file on. 
+Once your service is up, you can run the test.py file. This will ask for the IP to which your endpoints are running on so make sure you have an accessiable IP to the machine you are running the file on.
+
+The IP I given was 35.189.79.146 
 
 ## Q1
 
