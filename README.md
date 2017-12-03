@@ -32,7 +32,9 @@ The above flag essentially allows the docker socket to be avaiable to the servic
 
 Once your service is up, you can run the test.py file. This will ask for the IP to which your endpoints are running on so make sure you have an accessiable IP to the machine you are running the file on.
 
-The IP I given was 35.189.79.146 
+## IP
+
+The IP I was given was 35.189.79.146 from Google. The port is 80, which redirects to 8080.
 
 ## Q1
 
