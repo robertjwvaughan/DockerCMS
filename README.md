@@ -18,4 +18,16 @@ The above command allows a worker node to join the swarm
 
 ## Q2
 
+Question 2 required a student to build a Docker CMS with various endpoints to configure the docker service. We shall go through each one given and describe how a solution to each endpoint is achieved
+
+### GET /containers
+### GET /containers?state=running
+### GET /containers/<id>
+### GET /containers/<id>/logs
+### GET /services
+### GET /nodes
+### GET /images
+### PATCH /images/<id>
+### PATCH /containers/<id>
+
 ## Q3
