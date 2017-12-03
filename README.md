@@ -62,12 +62,12 @@ Returns JSON data for all of the running containers in the CMS.
 
 Command: docker ps
 
-### GET /containers/<id>
+### GET /containers/id
 Returns JSON data for a specific container
 
 Command: docker inspect CONTAINER_ID
 
-### GET /containers/<id>/logs
+### GET /containers/id/logs
 Returns log data for a specific container. The data is given in a JSON format
 
 Command: docker logs CONTAINER_ID
@@ -87,13 +87,13 @@ Returns a list of all images
 
 Command: docker images
 
-### PATCH /images/<id>
+### PATCH /images/id
 
 Endpoint to change an images tag
 
 Command docker tag IMAGE NEW_TAG
 
-### PATCH /containers/<id>
+### PATCH /containers/id
 Command: docker STATUS CONTAINER_ID
 
 ### POST /images
@@ -106,7 +106,7 @@ Creates an instance (container) of an image
 
 Command: docker run -d image
 
-### DELETE /containers/<id>
+### DELETE /containers/id
 Deletes a container
 
 Command: docker rm CONTAINER
@@ -114,13 +114,16 @@ Command: docker rm CONTAINER
 ### DELETE /containers
 Deletes ALL containers
 
-Commands 
+Commands
+
 docker ps
+
 docker stop CONTAINER
+
 docker rm CONTAINER
 
-### DELETE /images/<id>
-Deletes and image within the CMS
+### DELETE /images/id
+Deletes an image within the CMS
 
 Command: docker image rm IMAGE
 
@@ -128,7 +131,9 @@ Command: docker image rm IMAGE
 Deletes ALL images within the CMS
 
 Commands
+
 docker images
+
 docker image rm IMAGE
 
 ## Q3
