@@ -12,7 +12,25 @@ Student: Robert Vaughan - C15341261
 
 ## Setup
 
+To run the following code, clone it in the appropritate directory. Once cloned in your VM, build a docker image with the included Dockerfile. Once you have that completed, create a docker swarm and add nodes to it (see command in Q1). Once you have your image and swarm, now you can create a service. 
 
+To create a service, use the following code
+
+```
+docker service create --replicas 3 -p 80:8080 --mount type=bind,source=/var/run/docker.sock,destination=/var/run/docker.sock --constraint 'node.role==manager' --name dockercms cms
+```
+
+The above command with create a service with 3 replicated containers that are forwarded to port 8080. Ensure port 8080 is exposed when running.
+
+A key note is the following flag
+
+```
+--mount type=bind,source=/var/run/docker.sock,destination=/var/run/docker.sock
+```
+
+The above flag essentially allows the docker socket to be avaiable to the service, which will allow us to run the queries we require
+
+Once your service is up, you can run the test.py file. This will ask for the IP to which your endpoints are running on so make sure you have an accessiable IP to the machine you are running the file on. 
 
 ## Q1
 
