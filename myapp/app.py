@@ -47,8 +47,9 @@ def containers_index():
 @app.route('/containers/<id>', methods=['GET'])
 def containers_show(id):
     output = docker("inspect", str(id))
+    resp = json.dumps(output)
 
-    return Response(response=output, mimetype="application/json")
+    return Response(response=resp, mimetype="application/json")
 
 @app.route('/containers/<id>/logs', methods=['GET'])
 def containers_logs(id):
@@ -85,16 +86,15 @@ def create_container():
     json_request = request.get_json(force=True)
     image = json_request['image']
     
-    output = docker('run', '-d', image)
-    resp = '{id: "' + output + '"}'
+    output = docker('run', '-d', image)[0:12]
+    resp = '{"id": "' + output + '"}'
 
     return Response(response=resp, mimetype="application/json")
 
 @app.route('/images', methods=['POST'])
 def images_create():
     request_file = request.files['file']
-    request_file.save('DockerfileUpload')
-
+    request_file.save("Dockerfile")
     docker('build', '-t', 'custom', '.')
     images = docker('images')
     resp  = json.dumps(docker_images_to_array(images))
@@ -108,10 +108,10 @@ def patch_container(id):
 
     if state == 'stopped':
         docker('stop', str(id))
-        resp = '{id: "' + str(id) + '", status: "stopped"}'
+        resp = '{"id": "' + str(id) + '", "status": "stopped"}'
     elif state == 'running':
         docker('restart', str(id))
-        resp = '{id: "' + str(id) + '", status: "running"}'
+        resp = '{"id": "' + str(id) + '", "status": "running"}'
 
     return Response(response=resp, mimetype="application/json")
 
@@ -121,7 +121,7 @@ def images_update(id):
     tag = json_request['tag']
 
     docker('tag', str(id), tag)
-    resp = '{id: "' + str(id) + '", tag:"' + str(tag) + '"}'
+    resp = '{"id": "' + str(id) + '", "tag":"' + str(tag) + '"}'
 
     return Response(response=resp, mimetype="application/json")
 
@@ -134,7 +134,7 @@ def images_remove_all():
         if obj['name'] != 'cms':
             docker('rmi', obj['name'])
 
-    resp = '{status: "completed"}'
+    resp = '{"status": "completed"}'
     return Response(response=resp, mimetype="application/json")
 
 @app.route('/images/<id>', methods=['DELETE'])
@@ -142,27 +142,27 @@ def images_remove(id):
     #https://www.digitalocean.com/community/tutorials/how-to-remove-docker-images-containers-and-volumes
     
     docker('rmi', str(id))
-    resp = '{id: ' + str(id) + ', status: Deleted}'
+    resp = '{"id": ' + str(id) + ', "status": "Deleted"}'
     return Response(response=resp, mimetype="application/json")
 
 @app.route('/containers', methods=['DELETE'])
 def containers_remove_all():
     output = docker('ps', '-a')
-    json_data = docker_images_to_array(output)
+    json_data = docker_ps_to_array(output)
 
     for obj in json_data:
         if obj['image'] != 'cms':
             docker('stop', str(obj['id']))
             docker('rm', str(obj['id']))
 
-    resp = '{status: "completed"}'
+    resp = '{"status": "completed"}'
     return Response(response=resp, mimetype="application/json")
 
 @app.route('/containers/<id>', methods=['DELETE'])
 def containers_remove(id):
 
     docker ('rm', str(id))
-    resp = '{id: ' + str(id) + ', status: Deleted}'
+    resp = '{"id": ' + str(id) + ', "status": Deleted}'
     return Response(response=resp, mimetype="application/json")
 
 def docker(*args):
